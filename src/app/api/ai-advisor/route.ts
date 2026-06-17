@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
+import Groq from "groq-sdk";
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const SYSTEM = `You are PAD (Pick a Degree), an expert college advisor for Tamil Nadu, India.
 Help students find the right college and degree program based on their marks, budget, location preference, and career goals.
@@ -24,16 +24,18 @@ Keep responses concise, structured with bullet points or numbered lists, and stu
 export async function POST(req: NextRequest) {
   const { messages } = await req.json();
 
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-6",
+  const completion = await groq.chat.completions.create({
+    model: "llama-3.3-70b-versatile",
+    messages: [
+      { role: "system", content: SYSTEM },
+      ...messages.map((m: { role: string; content: string }) => ({
+        role: m.role as "user" | "assistant",
+        content: m.content,
+      })),
+    ],
     max_tokens: 1024,
-    system: SYSTEM,
-    messages: messages.map((m: { role: string; content: string }) => ({
-      role: m.role as "user" | "assistant",
-      content: m.content,
-    })),
   });
 
-  const reply = response.content[0].type === "text" ? response.content[0].text : "";
+  const reply = completion.choices[0]?.message?.content ?? "";
   return NextResponse.json({ reply });
 }
