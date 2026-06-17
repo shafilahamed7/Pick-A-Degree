@@ -24,9 +24,9 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white border-b border-slate-100 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 flex items-center h-14 gap-6">
+      <div className="max-w-7xl mx-auto px-4 flex items-center h-16 gap-6">
         <Link href="/" className="flex items-center shrink-0">
-          <img src="/logo.png" alt="Pick A Degree" className="h-9 w-auto object-contain" />
+          <img src="/logo.png" alt="Pick A Degree" className="h-14 w-auto object-contain" />
         </Link>
 
         {/* Desktop nav — scrollable */}
