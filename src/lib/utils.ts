@@ -5,9 +5,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatPackage(crore: number) {
-  if (crore >= 1) return `₹${crore.toFixed(1)} Cr`;
-  return `₹${(crore * 100).toFixed(0)} L`;
+export function formatPackage(lpa: number) {
+  if (lpa >= 100) return `₹${(lpa / 100).toFixed(1)} Cr LPA`;
+  return `₹${lpa % 1 === 0 ? lpa.toFixed(0) : lpa.toFixed(1)} LPA`;
 }
 
 export function formatFee(annual: number) {
