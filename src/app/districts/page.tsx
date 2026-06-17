@@ -24,11 +24,10 @@ const DISTRICT_META: Record<string, { emoji: string; tagline: string }> = {
 export default async function DistrictsPage() {
   let districtCounts: { district: string; _count: { id: number } }[] = [];
   try {
-    districtCounts = await prisma.college.groupBy({
-      by: ["district"],
-      _count: { id: true },
-      orderBy: { _count: { id: "desc" } },
-    });
+    const rows = await prisma.$queryRawUnsafe<{ district: string; cnt: bigint }[]>(
+      `SELECT district, COUNT(id)::int as cnt FROM "College" GROUP BY district ORDER BY cnt DESC`
+    );
+    districtCounts = rows.map(r => ({ district: r.district, _count: { id: Number(r.cnt) } }));
   } catch (e) {
     console.error("Districts page DB error:", e);
   }
