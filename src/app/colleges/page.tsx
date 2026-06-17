@@ -34,6 +34,7 @@ function CollegesContent() {
   const searchParams = useSearchParams();
   const [colleges, setColleges] = useState<College[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [search, setSearch] = useState(searchParams.get("search") ?? "");
   const [district, setDistrict] = useState(searchParams.get("district") ?? "");
   const [type, setType] = useState(searchParams.get("type") ?? "");
@@ -46,9 +47,11 @@ function CollegesContent() {
     if (type) params.set("type", type);
     if (minPlacement) params.set("minPlacement", minPlacement);
     setLoading(true);
+    setError(false);
     fetch(`/api/colleges?${params}`)
-      .then((r) => r.json())
-      .then((data) => { setColleges(data); setLoading(false); });
+      .then((r) => { if (!r.ok) throw new Error("API error"); return r.json(); })
+      .then((data) => { setColleges(Array.isArray(data) ? data : []); setLoading(false); })
+      .catch(() => { setColleges([]); setLoading(false); setError(true); });
   }, [search, district, type, minPlacement]);
 
   return (
@@ -104,14 +107,22 @@ function CollegesContent() {
 
         {loading ? (
           <div className="text-center py-24 text-slate-400">
-            <div className="text-4xl mb-3">🔍</div>
-            <p className="font-medium">Loading colleges...</p>
+            <div className="w-8 h-8 border-2 border-indigo-300 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="font-medium">Searching colleges...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center py-24 text-slate-400 bg-white rounded-2xl border border-slate-100">
+            <div className="text-4xl mb-3">⚠️</div>
+            <p className="font-medium text-slate-600">Something went wrong</p>
+            <button onClick={() => setSearch(search)} className="mt-3 text-sm text-indigo-600 hover:underline font-medium">Try again</button>
           </div>
         ) : colleges.length === 0 ? (
           <div className="text-center py-24 text-slate-400 bg-white rounded-2xl border border-slate-100">
             <div className="text-4xl mb-3">😕</div>
             <p className="font-medium">No colleges found</p>
-            <p className="text-sm mt-1">Try adjusting your filters</p>
+            <p className="text-sm mt-1">Try a different name or clear filters</p>
+            <button onClick={() => { setSearch(""); setDistrict(""); setType(""); setMinPlacement(""); }}
+              className="mt-3 text-sm text-indigo-600 hover:underline font-medium">Clear all filters</button>
           </div>
         ) : (
           <>
