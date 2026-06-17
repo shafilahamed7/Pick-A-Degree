@@ -15,8 +15,8 @@ export default function SplashScreen() {
 
     // fade-in → hold → fade-out → done
     const t1 = setTimeout(() => setPhase("hold"), 450);   // after fade-in
-    const t2 = setTimeout(() => setPhase("out"),  1000);  // start fade-out
-    const t3 = setTimeout(() => setPhase("done"), 1350);  // unmount
+    const t2 = setTimeout(() => setPhase("out"),  1450);  // start fade-out (1s hold)
+    const t3 = setTimeout(() => setPhase("done"), 1800);  // unmount
 
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, []);
