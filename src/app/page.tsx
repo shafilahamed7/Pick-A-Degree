@@ -20,7 +20,7 @@ const topColleges = [
   { name: "IIT Madras", city: "Chennai", type: "IIT", rank: 1, placement: "95%", slug: "iit-madras", color: "from-red-500 to-orange-400" },
   { name: "NIT Trichy", city: "Tiruchirappalli", type: "NIT", rank: 9, placement: "90%", slug: "nit-trichy", color: "from-orange-500 to-amber-400" },
   { name: "Anna University", city: "Chennai", type: "University", rank: 10, placement: "85%", slug: "anna-university", color: "from-blue-500 to-cyan-400" },
-  { name: "VIT Vellore", city: "Vellore", type: "Deemed", rank: 16, placement: "89%", slug: "vit-vellore", color: "from-emerald-500 to-teal-400" },
+  { name: "VIT Vellore", city: "Vellore", type: "Deemed", rank: 16, placement: "89%", slug: "vit-vellore-main", color: "from-emerald-500 to-teal-400" },
   { name: "SRM Institute", city: "Chennai", type: "Deemed", rank: 14, placement: "88%", slug: "srm-institute-of-science-and-technology", color: "from-violet-500 to-purple-400" },
   { name: "PSG College of Technology", city: "Coimbatore", type: "Autonomous", rank: 72, placement: "92%", slug: "psg-college-of-technology", color: "from-amber-500 to-yellow-400" },
 ];
@@ -41,12 +41,12 @@ const featuredColleges = [
   { name: "IIT Madras", slug: "iit-madras", type: "IIT", city: "Chennai", color: "from-red-600 to-orange-500", fact: "Ranked #1 in NIRF every year since 2016" },
   { name: "NIT Trichy", slug: "nit-trichy", type: "NIT", city: "Tiruchirappalli", color: "from-orange-600 to-amber-500", fact: "90%+ placements with top global recruiters" },
   { name: "Anna University", slug: "anna-university", type: "University", city: "Chennai", color: "from-blue-600 to-cyan-500", fact: "Affiliating university for 500+ colleges in TN" },
-  { name: "VIT Vellore", slug: "vit-vellore", type: "Deemed", city: "Vellore", color: "from-emerald-600 to-teal-500", fact: "Largest private university campus in India" },
+  { name: "VIT Vellore", slug: "vit-vellore-main", type: "Deemed", city: "Vellore", color: "from-emerald-600 to-teal-500", fact: "Largest private university campus in India" },
   { name: "PSG College of Technology", slug: "psg-college-of-technology", type: "Autonomous", city: "Coimbatore", color: "from-amber-600 to-yellow-500", fact: "92% placement rate with industry-leading labs" },
   { name: "SRM Institute", slug: "srm-institute-of-science-and-technology", type: "Deemed", city: "Chennai", color: "from-violet-600 to-purple-500", fact: "Top 50 in NIRF with 88% placement rate" },
-  { name: "Amrita Vishwa Vidyapeetham", slug: "amrita-vishwa-vidyapeetham", type: "Deemed", city: "Coimbatore", color: "from-pink-600 to-rose-500", fact: "Top-ranked research university in South India" },
-  { name: "SASTRA University", slug: "sastra-university", type: "Deemed", city: "Thanjavur", color: "from-indigo-600 to-blue-500", fact: "NAAC A++ grade with excellent research output" },
-  { name: "Karunya University", slug: "karunya-university", type: "Deemed", city: "Coimbatore", color: "from-teal-600 to-green-500", fact: "Known for strong industry connections & placements" },
+  { name: "Amrita Engineering", slug: "amrita-school-of-engineering-coimbatore", type: "Deemed", city: "Coimbatore", color: "from-pink-600 to-rose-500", fact: "Top-ranked research university in South India" },
+  { name: "SASTRA University", slug: "sastra-deemed-university", type: "Deemed", city: "Thanjavur", color: "from-indigo-600 to-blue-500", fact: "NAAC A++ grade with excellent research output" },
+  { name: "Karunya University", slug: "karunya-institute-of-technology-and-sciences", type: "Deemed", city: "Coimbatore", color: "from-teal-600 to-green-500", fact: "Known for strong industry connections & placements" },
 ];
 
 function getFeatured() {
