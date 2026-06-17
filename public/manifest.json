@@ -1,0 +1,16 @@
+{
+  "name": "Pick A Degree",
+  "short_name": "PAD",
+  "description": "Tamil Nadu's #1 college discovery platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/logo.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "categories": ["education"],
+  "lang": "en-IN"
+}

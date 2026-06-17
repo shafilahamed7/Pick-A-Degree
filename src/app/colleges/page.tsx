@@ -31,6 +31,16 @@ const TYPE_COLORS: Record<string, string> = {
   DEEMED: "bg-teal-50 text-teal-700 border-teal-100",
 };
 
+const TYPE_GRADIENT: Record<string, string> = {
+  IIT: "from-red-500 to-orange-400",
+  NIT: "from-orange-500 to-amber-400",
+  UNIVERSITY: "from-blue-500 to-cyan-400",
+  GOVERNMENT: "from-emerald-500 to-teal-400",
+  AUTONOMOUS: "from-violet-500 to-purple-400",
+  PRIVATE: "from-slate-400 to-slate-500",
+  DEEMED: "from-teal-500 to-cyan-400",
+};
+
 function CollegesContent() {
   const searchParams = useSearchParams();
   const [colleges, setColleges] = useState<College[]>([]);
@@ -113,9 +123,28 @@ function CollegesContent() {
         </div>
 
         {loading ? (
-          <div className="text-center py-24 text-slate-400">
-            <div className="w-8 h-8 border-2 border-indigo-300 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="font-medium">Searching colleges...</p>
+          <div className="grid gap-4 md:grid-cols-2">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-slate-100 overflow-hidden animate-pulse">
+                <div className="h-1.5 bg-slate-200" />
+                <div className="p-5">
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="w-11 h-11 rounded-xl bg-slate-200 shrink-0" />
+                    <div className="flex-1">
+                      <div className="h-4 bg-slate-200 rounded-lg w-3/4 mb-2" />
+                      <div className="h-3 bg-slate-100 rounded-lg w-1/2" />
+                    </div>
+                  </div>
+                  <div className="h-3 bg-slate-100 rounded-lg w-full mb-2" />
+                  <div className="h-3 bg-slate-100 rounded-lg w-5/6 mb-4" />
+                  <div className="flex gap-4 pt-3 border-t border-slate-50">
+                    <div className="h-8 bg-slate-100 rounded-lg w-16" />
+                    <div className="h-8 bg-slate-100 rounded-lg w-20" />
+                    <div className="h-8 bg-slate-100 rounded-lg w-16" />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         ) : error ? (
           <div className="text-center py-24 text-slate-400 bg-white rounded-2xl border border-slate-100">
@@ -145,11 +174,13 @@ function CollegesContent() {
                   <Link
                     key={college.id}
                     href={`/colleges/${college.slug}`}
-                    className="bg-white rounded-2xl border border-slate-100 p-5 hover:border-indigo-200 hover:shadow-md transition-all block group"
+                    className="bg-white rounded-2xl border border-slate-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 block group"
                   >
+                    <div className={`h-1.5 bg-gradient-to-r ${TYPE_GRADIENT[college.type] ?? "from-slate-400 to-slate-500"}`} />
+                    <div className="p-5">
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex items-start gap-3">
-                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 ${TYPE_COLORS[college.type] ?? "bg-slate-50 text-slate-700"}`}>
+                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 bg-gradient-to-br ${TYPE_GRADIENT[college.type] ?? "from-slate-400 to-slate-500"} text-white shadow-md`}>
                           {college.name.split(" ").map(w => w[0]).join("").slice(0, 3)}
                         </div>
                         <div>
@@ -215,6 +246,7 @@ function CollegesContent() {
                       {college.departments.length > 4 && (
                         <span className="text-xs text-slate-400 px-2 py-1">+{college.departments.length - 4} more</span>
                       )}
+                    </div>
                     </div>
                   </Link>
                 );

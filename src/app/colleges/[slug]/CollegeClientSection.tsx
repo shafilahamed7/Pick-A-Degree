@@ -83,7 +83,14 @@ export default function CollegeClientSection({ collegeId, collegeName, collegeSl
           <span className="text-sm font-medium text-slate-700">Save to my shortlist</span>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => { navigator.clipboard?.writeText(window.location.href); }} className="text-xs text-slate-500 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors font-medium">
+          {typeof navigator !== "undefined" && "share" in navigator ? (
+            <button onClick={() => navigator.share?.({ title: collegeName, url: window.location.href })}
+              className="text-xs text-indigo-600 border border-indigo-200 bg-indigo-50 px-3 py-1.5 rounded-lg hover:bg-indigo-100 transition-colors font-semibold">
+              ↗ Share
+            </button>
+          ) : null}
+          <button onClick={() => { navigator.clipboard?.writeText(window.location.href); }}
+            className="text-xs text-slate-500 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors font-medium">
             📋 Copy link
           </button>
         </div>

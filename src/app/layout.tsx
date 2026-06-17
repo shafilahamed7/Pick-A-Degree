@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "Pick a Degree (PAD) — Find Colleges in Tamil Nadu",
   description:
     "Discover the best colleges and degree programs in Tamil Nadu. Compare colleges, explore courses, and get AI-powered recommendations.",
+  manifest: "/manifest.json",
+  themeColor: "#4f46e5",
+  appleWebApp: { capable: true, statusBarStyle: "default", title: "PAD" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

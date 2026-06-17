@@ -6,11 +6,13 @@ import { useState } from "react";
 
 const links = [
   { href: "/colleges", label: "Colleges" },
-  { href: "/courses", label: "Courses" },
+  { href: "/districts", label: "Districts" },
+  { href: "/map", label: "Map" },
   { href: "/rankings", label: "Rankings" },
   { href: "/entrance-exams", label: "Exams" },
   { href: "/cutoffs", label: "Cutoffs" },
   { href: "/scholarships", label: "Scholarships" },
+  { href: "/courses", label: "Courses" },
   { href: "/jobs", label: "Jobs" },
   { href: "/events", label: "Events" },
   { href: "/compare", label: "Compare" },
@@ -23,7 +25,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-white border-b border-slate-100 sticky top-0 z-50 overflow-hidden">
+    <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 flex items-center h-16 gap-6">
         <Link href="/" className="flex items-stretch shrink-0 self-stretch">
           <img src="/logo.png" alt="Pick A Degree" className="h-full w-auto object-contain" />
