@@ -39,9 +39,9 @@ export default async function AdminPage() {
             <h1 className="text-2xl font-bold text-slate-900">Admin dashboard</h1>
             <p className="text-slate-500 text-sm mt-0.5">Manage colleges, courses, and platform data</p>
           </div>
-          <Link href="/admin/colleges/new"
+          <Link href="/colleges"
             className="text-sm bg-indigo-600 text-white px-4 py-2.5 rounded-xl hover:bg-indigo-700 transition-colors font-semibold">
-            + Add college
+            View colleges
           </Link>
         </div>
       </div>

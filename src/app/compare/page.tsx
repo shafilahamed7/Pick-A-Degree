@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, Suspense } from "react";
+import { useEffect, useState, useCallback, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { formatPackage } from "@/lib/utils";
 
@@ -32,34 +32,34 @@ const TYPE_COLORS: Record<string, string> = {
 
 function CompareContent() {
   const searchParams = useSearchParams();
-  const [allColleges, setAllColleges] = useState<College[]>([]);
   const [selected, setSelected] = useState<College[]>([]);
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<College[]>([]);
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    fetch("/api/colleges")
+    const addSlug = searchParams.get("add");
+    if (!addSlug) return;
+    fetch(`/api/colleges?search=${encodeURIComponent(addSlug)}&limit=8`)
       .then((r) => r.json())
       .then((data: College[]) => {
-        setAllColleges(data);
-        const addSlug = searchParams.get("add");
-        if (addSlug) {
-          const found = data.find((c) => c.slug === addSlug);
-          if (found) setSelected([found]);
-        }
+        const found = data.find((c) => c.slug === addSlug);
+        if (found) setSelected([found]);
       });
   }, [searchParams]);
 
   const doSearch = useCallback((q: string) => {
     setSearch(q);
     if (!q.trim()) { setResults([]); return; }
-    const filtered = allColleges.filter(
-      (c) =>
-        !selected.find((s) => s.id === c.id) &&
-        (c.name.toLowerCase().includes(q.toLowerCase()) || c.city.toLowerCase().includes(q.toLowerCase()))
-    );
-    setResults(filtered.slice(0, 6));
-  }, [allColleges, selected]);
+    if (searchTimer.current) clearTimeout(searchTimer.current);
+    searchTimer.current = setTimeout(() => {
+      fetch(`/api/colleges?search=${encodeURIComponent(q)}&limit=8`)
+        .then((r) => r.json())
+        .then((data: College[]) => {
+          setResults(data.filter((c) => !selected.find((s) => s.id === c.id)).slice(0, 6));
+        });
+    }, 250);
+  }, [selected]);
 
   const addCollege = (c: College) => {
     if (selected.length >= 3 || selected.find((s) => s.id === c.id)) return;

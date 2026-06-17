@@ -21,7 +21,15 @@ export async function GET(req: NextRequest) {
 
     const events = await prisma.event.findMany({
       where,
-      include: {
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        eventType: true,
+        startDate: true,
+        endDate: true,
+        venue: true,
+        registrationUrl: true,
         college: { select: { id: true, name: true, slug: true, type: true, city: true, website: true } },
       },
       orderBy: { startDate: "asc" },

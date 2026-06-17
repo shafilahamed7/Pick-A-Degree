@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
 
+export const dynamic = "force-dynamic";
+
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const SYSTEM = `You are PAD (Pick a Degree), an expert college advisor for Tamil Nadu, India.
@@ -22,20 +24,25 @@ When recommending colleges:
 Keep responses concise, structured with bullet points or numbered lists, and student-friendly.`;
 
 export async function POST(req: NextRequest) {
-  const { messages } = await req.json();
+  try {
+    const { messages } = await req.json();
 
-  const completion = await groq.chat.completions.create({
-    model: "llama-3.3-70b-versatile",
-    messages: [
-      { role: "system", content: SYSTEM },
-      ...messages.map((m: { role: string; content: string }) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content,
-      })),
-    ],
-    max_tokens: 1024,
-  });
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      messages: [
+        { role: "system", content: SYSTEM },
+        ...messages.map((m: { role: string; content: string }) => ({
+          role: m.role as "user" | "assistant",
+          content: m.content,
+        })),
+      ],
+      max_tokens: 1024,
+    });
 
-  const reply = completion.choices[0]?.message?.content ?? "";
-  return NextResponse.json({ reply });
+    const reply = completion.choices[0]?.message?.content ?? "";
+    return NextResponse.json({ reply });
+  } catch (err) {
+    console.error("AI Advisor error:", err);
+    return NextResponse.json({ error: "AI advisor is temporarily unavailable. Please try again." }, { status: 500 });
+  }
 }
