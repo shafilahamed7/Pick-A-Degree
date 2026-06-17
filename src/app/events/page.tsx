@@ -12,7 +12,7 @@ type Event = {
   endDate: string | null;
   venue: string | null;
   registrationUrl: string | null;
-  college: { id: string; name: string; slug: string; type: string; city: string };
+  college: { id: string; name: string; slug: string; type: string; city: string; website: string | null };
 };
 
 const EVENT_META: Record<string, { icon: string; label: string; color: string; bg: string }> = {
@@ -202,10 +202,21 @@ export default function EventsPage() {
                           </span>
                           <span className="text-xs text-slate-400 shrink-0">· {event.college.city}</span>
                         </Link>
-                        <Link href={`/colleges/${event.college.slug}`}
-                          className="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors font-semibold shrink-0">
-                          Register →
-                        </Link>
+                        {event.registrationUrl || event.college.website ? (
+                          <a
+                            href={event.registrationUrl ?? event.college.website!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors font-semibold shrink-0"
+                          >
+                            Register ↗
+                          </a>
+                        ) : (
+                          <Link href={`/colleges/${event.college.slug}`}
+                            className="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors font-semibold shrink-0">
+                            View college →
+                          </Link>
+                        )}
                       </div>
                     </div>
                   </div>
