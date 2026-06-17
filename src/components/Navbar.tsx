@@ -7,6 +7,7 @@ const links = [
   { href: "/colleges", label: "Colleges" },
   { href: "/courses", label: "Courses" },
   { href: "/jobs", label: "Jobs" },
+  { href: "/events", label: "Events" },
   { href: "/compare", label: "Compare" },
   { href: "/ai-advisor", label: "AI Advisor" },
 ];
