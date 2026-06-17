@@ -1,15 +1,6 @@
 export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/prisma";
-import nextDynamic from "next/dynamic";
-
-const CollegeMap = nextDynamic(() => import("./CollegeMap"), { ssr: false, loading: () => (
-  <div className="w-full h-full flex items-center justify-center bg-slate-100 text-slate-400">
-    <div className="text-center">
-      <div className="w-8 h-8 border-2 border-indigo-300 border-t-indigo-600 rounded-full animate-spin mx-auto mb-3" />
-      <p className="text-sm font-medium">Loading map...</p>
-    </div>
-  </div>
-)});
+import MapWrapper from "./MapWrapper";
 
 // TN college coordinates
 const COORDS: Record<string, [number, number]> = {
@@ -80,7 +71,7 @@ export default async function MapPage() {
         </div>
       </div>
       <div className="flex-1 relative" style={{ minHeight: "calc(100vh - 130px)" }}>
-        <CollegeMap colleges={mapped} />
+        <MapWrapper colleges={mapped} />
       </div>
     </div>
   );
