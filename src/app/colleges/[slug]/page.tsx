@@ -17,16 +17,45 @@ const TYPE_COLORS: Record<string, string> = {
 export default async function CollegePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  const college = await prisma.college.findUnique({
-    where: { slug },
-    include: {
-      placements: { orderBy: { year: "desc" }, take: 1 },
-      departments: { include: { courses: true } },
-      facilities: true,
-      events: { orderBy: { startDate: "asc" }, take: 5 },
-      university: true,
-    },
-  });
+  let college;
+  try {
+    college = await prisma.college.findUnique({
+      where: { slug },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        type: true,
+        city: true,
+        district: true,
+        address: true,
+        established: true,
+        website: true,
+        description: true,
+        naacGrade: true,
+        nirfRank: true,
+        placements: { orderBy: { year: "desc" }, take: 1 },
+        departments: {
+          select: {
+            id: true,
+            name: true,
+            courses: {
+              select: { id: true, name: true, duration: true, totalSeats: true, annualFee: true },
+            },
+          },
+        },
+        facilities: { select: { id: true, name: true } },
+        events: {
+          orderBy: { startDate: "asc" },
+          take: 5,
+          select: { id: true, title: true, eventType: true, startDate: true, venue: true },
+        },
+      },
+    });
+  } catch (err) {
+    console.error("College page error:", err);
+    notFound();
+  }
 
   if (!college) notFound();
 
