@@ -205,7 +205,16 @@ export default async function CollegePage({ params }: { params: Promise<{ slug: 
         )}
 
         {/* Reviews section (client component) */}
-        <CollegeClientSection collegeId={college.id} collegeName={college.name} collegeSlug={college.slug} />
+        <CollegeClientSection
+          collegeId={college.id}
+          collegeName={college.name}
+          collegeSlug={college.slug}
+          collegeType={college.type}
+          collegeCity={college.city}
+          collegeDistrict={college.district}
+          nirfRank={college.nirfRank ?? null}
+          naacGrade={college.naacGrade ?? null}
+        />
 
         {/* Events */}
         {college.events.length > 0 && (

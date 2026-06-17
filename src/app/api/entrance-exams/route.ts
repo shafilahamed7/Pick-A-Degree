@@ -9,20 +9,24 @@ export async function GET(req: NextRequest) {
     const search = searchParams.get("search") ?? "";
     const type = searchParams.get("type") ?? "";
 
-    const where: any = {};
-    if (search) {
-      where.OR = [
-        { name: { contains: search, mode: "insensitive" } },
-        { shortName: { contains: search, mode: "insensitive" } },
-        { description: { contains: search, mode: "insensitive" } },
-      ];
-    }
-    if (type) where.examType = { contains: type, mode: "insensitive" };
+    let query = `SELECT * FROM "EntranceExam" WHERE 1=1`;
+    const params: any[] = [];
+    let i = 1;
 
-    const rows = await (prisma as any).entranceExam.findMany({ where, orderBy: { shortName: "asc" } });
+    if (search) {
+      query += ` AND (name ILIKE $${i} OR "shortName" ILIKE $${i} OR description ILIKE $${i})`;
+      params.push(`%${search}%`); i++;
+    }
+    if (type) {
+      query += ` AND "examType" ILIKE $${i}`;
+      params.push(`%${type}%`); i++;
+    }
+    query += ` ORDER BY "shortName" ASC`;
+
+    const rows = await prisma.$queryRawUnsafe(query, ...params);
     return NextResponse.json(rows);
   } catch (err) {
-    console.error(err);
+    console.error("Entrance exams API error:", err);
     return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
 }

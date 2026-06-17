@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
     const type = searchParams.get("type");
     const search = searchParams.get("search");
     const minPlacement = searchParams.get("minPlacement");
+    const limit = parseInt(searchParams.get("limit") ?? "0") || undefined;
 
     const where: any = {};
 
@@ -29,6 +30,7 @@ export async function GET(req: NextRequest) {
 
     const colleges = await prisma.college.findMany({
       where,
+      take: limit,
       select: {
         id: true,
         name: true,

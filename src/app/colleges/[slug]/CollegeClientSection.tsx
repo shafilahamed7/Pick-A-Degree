@@ -34,7 +34,11 @@ function RatingInput({ label, value, onChange }: { label: string; value: string;
   );
 }
 
-export default function CollegeClientSection({ collegeId, collegeName, collegeSlug }: { collegeId: string; collegeName: string; collegeSlug: string }) {
+export default function CollegeClientSection({ collegeId, collegeName, collegeSlug, collegeType, collegeCity, collegeDistrict, nirfRank, naacGrade }: {
+  collegeId: string; collegeName: string; collegeSlug: string;
+  collegeType: string; collegeCity: string; collegeDistrict: string;
+  nirfRank: number | null; naacGrade: string | null;
+}) {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [cutoffs, setCutoffs] = useState<Cutoff[]>([]);
   const [showForm, setShowForm] = useState(false);
@@ -75,7 +79,7 @@ export default function CollegeClientSection({ collegeId, collegeName, collegeSl
       {/* Shortlist row */}
       <div className="bg-white rounded-2xl border border-slate-100 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <ShortlistButton college={{ id: collegeId, name: collegeName, slug: collegeSlug, type: "", city: "", district: "" }} />
+          <ShortlistButton college={{ id: collegeId, name: collegeName, slug: collegeSlug, type: collegeType, city: collegeCity, district: collegeDistrict, nirfRank, naacGrade }} />
           <span className="text-sm font-medium text-slate-700">Save to my shortlist</span>
         </div>
         <div className="flex gap-2">

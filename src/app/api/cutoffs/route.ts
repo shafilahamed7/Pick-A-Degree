@@ -9,17 +9,24 @@ export async function GET(req: NextRequest) {
     const collegeId = searchParams.get("collegeId") ?? "";
     const branch = searchParams.get("branch") ?? "";
 
-    const where: any = {};
-    if (collegeId) where.collegeId = collegeId;
-    if (branch) where.branch = { contains: branch, mode: "insensitive" };
+    let query = `SELECT * FROM "Cutoff" WHERE 1=1`;
+    const params: any[] = [];
+    let i = 1;
 
-    const rows = await (prisma as any).cutoff.findMany({
-      where,
-      orderBy: [{ year: "desc" }, { category: "asc" }],
-    });
+    if (collegeId) {
+      query += ` AND "collegeId" = $${i}`;
+      params.push(collegeId); i++;
+    }
+    if (branch) {
+      query += ` AND branch ILIKE $${i}`;
+      params.push(`%${branch}%`); i++;
+    }
+    query += ` ORDER BY year DESC, category ASC`;
+
+    const rows = await prisma.$queryRawUnsafe(query, ...params);
     return NextResponse.json(rows);
   } catch (err) {
-    console.error(err);
+    console.error("Cutoffs API error:", err);
     return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
 }

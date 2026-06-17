@@ -42,8 +42,8 @@ export default function ShortlistPage() {
           </div>
           {colleges.length > 0 && (
             <div className="flex gap-2">
-              <Link href={`/compare?ids=${colleges.slice(0, 3).map(c => c.id).join(",")}`} className="text-sm bg-indigo-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition-colors">
-                Compare top 3
+              <Link href={`/compare?add=${colleges[0]?.slug ?? ""}`} className="text-sm bg-indigo-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition-colors">
+                Compare colleges
               </Link>
               <button onClick={clearAll} className="text-sm text-slate-500 hover:text-red-500 px-3 py-2 rounded-xl border border-slate-200 hover:border-red-200 transition-colors">
                 Clear all
