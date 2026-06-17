@@ -16,9 +16,14 @@ export function formatFee(annual: number) {
 }
 
 export const DISTRICTS = [
-  "Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Tirunelveli",
-  "Erode", "Vellore", "Thoothukudi", "Dindigul", "Thanjavur", "Ranipet",
-  "Kancheepuram", "Sivakasi", "Tirupur", "Kumbakonam", "Nagercoil", "Hosur",
+  "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore",
+  "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kanchipuram",
+  "Kanniyakumari", "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam",
+  "Namakkal", "Nilgiris", "Perambalur", "Puducherry", "Pudukkottai",
+  "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi",
+  "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli",
+  "Tirupattur", "Tiruppur", "Tiruvannamalai", "Tiruvarur", "Vellore",
+  "Villupuram", "Virudhunagar",
 ];
 
 export const COLLEGE_TYPES = [

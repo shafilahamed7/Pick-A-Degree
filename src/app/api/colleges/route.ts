@@ -20,6 +20,7 @@ export async function GET(req: NextRequest) {
         OR: [
           { name: { contains: search, mode: "insensitive" } },
           { city: { contains: search, mode: "insensitive" } },
+          { district: { contains: search, mode: "insensitive" } },
           { description: { contains: search, mode: "insensitive" } },
         ],
       }),
@@ -30,7 +31,6 @@ export async function GET(req: NextRequest) {
       facilities: true,
     },
     orderBy: [{ nirfRank: "asc" }, { name: "asc" }],
-    take: 50,
   });
 
   const filtered = minPlacement

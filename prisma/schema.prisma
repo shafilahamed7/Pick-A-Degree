@@ -24,6 +24,7 @@ model College {
   address      String
   city         String
   district     String
+  state        String   @default("Tamil Nadu")
   pincode      String?
   phone        String?
   email        String?
