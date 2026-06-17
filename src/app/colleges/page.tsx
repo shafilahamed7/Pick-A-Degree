@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { DISTRICTS, COLLEGE_TYPES, formatPackage } from "@/lib/utils";
 
@@ -29,13 +30,14 @@ const TYPE_COLORS: Record<string, string> = {
   DEEMED: "bg-teal-50 text-teal-700 border-teal-100",
 };
 
-export default function CollegesPage() {
+function CollegesContent() {
+  const searchParams = useSearchParams();
   const [colleges, setColleges] = useState<College[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
-  const [district, setDistrict] = useState("");
-  const [type, setType] = useState("");
-  const [minPlacement, setMinPlacement] = useState("");
+  const [search, setSearch] = useState(searchParams.get("search") ?? "");
+  const [district, setDistrict] = useState(searchParams.get("district") ?? "");
+  const [type, setType] = useState(searchParams.get("type") ?? "");
+  const [minPlacement, setMinPlacement] = useState(searchParams.get("minPlacement") ?? "");
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -197,5 +199,13 @@ export default function CollegesPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function CollegesPage() {
+  return (
+    <Suspense>
+      <CollegesContent />
+    </Suspense>
   );
 }
