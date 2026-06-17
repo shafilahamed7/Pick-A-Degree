@@ -26,7 +26,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 flex items-center h-16 gap-6">
+      <div className="max-w-7xl mx-auto px-4 flex items-center h-20 gap-6">
         <Link href="/" className="flex items-stretch shrink-0 self-stretch">
           <img src="/logo.png" alt="Pick A Degree" className="h-full w-auto object-contain" />
         </Link>
