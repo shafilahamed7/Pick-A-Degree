@@ -1,0 +1,206 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model University {
+  id        String    @id @default(cuid())
+  name      String
+  shortName String?
+  colleges  College[]
+  createdAt DateTime  @default(now())
+}
+
+model College {
+  id           String         @id @default(cuid())
+  name         String
+  slug         String         @unique
+  type         CollegeType
+  ownership    Ownership
+  established  Int?
+  address      String
+  city         String
+  district     String
+  pincode      String?
+  phone        String?
+  email        String?
+  website      String?
+  latitude     Float?
+  longitude    Float?
+  naacGrade    String?
+  nirfRank     Int?
+  description  String?
+  logoUrl      String?
+  imageUrl     String?
+  universityId String?
+  university   University?    @relation(fields: [universityId], references: [id])
+  departments  Department[]
+  placements   Placement[]
+  events       Event[]
+  facilities   Facility[]
+  savedBy      SavedCollege[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model Department {
+  id        String   @id @default(cuid())
+  name      String
+  collegeId String
+  college   College  @relation(fields: [collegeId], references: [id])
+  courses   Course[]
+}
+
+model Course {
+  id           String     @id @default(cuid())
+  name         String
+  degreeType   DegreeType
+  duration     Int
+  totalSeats   Int?
+  annualFee    Float?
+  eligibility  String?
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+}
+
+model Placement {
+  id               String   @id @default(cuid())
+  year             Int
+  placementPercent Float
+  averagePackage   Float?
+  highestPackage   Float?
+  totalStudents    Int?
+  placedStudents   Int?
+  topRecruiters    String[]
+  collegeId        String
+  college          College  @relation(fields: [collegeId], references: [id])
+}
+
+model Event {
+  id              String    @id @default(cuid())
+  title           String
+  description     String?
+  eventType       EventType
+  startDate       DateTime
+  endDate         DateTime?
+  venue           String?
+  registrationUrl String?
+  collegeId       String
+  college         College   @relation(fields: [collegeId], references: [id])
+}
+
+model Facility {
+  id        String       @id @default(cuid())
+  name      String
+  type      FacilityType
+  collegeId String
+  college   College      @relation(fields: [collegeId], references: [id])
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String         @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole       @default(STUDENT)
+  accounts      Account[]
+  sessions      Session[]
+  savedColleges SavedCollege[]
+  createdAt     DateTime       @default(now())
+}
+
+model SavedCollege {
+  id        String   @id @default(cuid())
+  userId    String
+  collegeId String
+  user      User     @relation(fields: [userId], references: [id])
+  college   College  @relation(fields: [collegeId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, collegeId])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum CollegeType {
+  UNIVERSITY
+  IIT
+  NIT
+  GOVERNMENT
+  PRIVATE
+  AUTONOMOUS
+  DEEMED
+  CENTRAL
+}
+
+enum Ownership {
+  GOVERNMENT
+  PRIVATE_AIDED
+  PRIVATE_UNAIDED
+  CENTRAL_GOVT
+}
+
+enum DegreeType {
+  UG
+  PG
+  DIPLOMA
+  RESEARCH
+  INTEGRATED
+}
+
+enum EventType {
+  HACKATHON
+  WORKSHOP
+  CULTURAL
+  TECHNICAL
+  SEMINAR
+  CONFERENCE
+  SPORTS
+  OTHER
+}
+
+enum FacilityType {
+  LIBRARY
+  HOSTEL
+  SPORTS
+  LAB
+  CANTEEN
+  TRANSPORT
+  WIFI
+  GYMNASIUM
+  MEDICAL
+  OTHER
+}
+
+enum UserRole {
+  STUDENT
+  ADMIN
+}
