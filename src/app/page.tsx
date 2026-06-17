@@ -36,24 +36,27 @@ const quickLinks = [
   { label: "TNEA exam details", href: "/entrance-exams" },
 ];
 
-// Featured college rotates daily
+// Featured colleges rotate daily — 3 shown at a time
 const featuredColleges = [
-  { name: "IIT Madras", tagline: "India's #1 ranked institute", slug: "iit-madras", type: "IIT", city: "Chennai", color: "from-red-600 to-orange-500", fact: "Consistently ranked #1 in NIRF since 2016" },
-  { name: "NIT Trichy", tagline: "Premier National Institute", slug: "nit-trichy", type: "NIT", city: "Tiruchirappalli", color: "from-orange-600 to-amber-500", fact: "90%+ placements with top global recruiters" },
-  { name: "Anna University", tagline: "TN's flagship university", slug: "anna-university", type: "University", city: "Chennai", color: "from-blue-600 to-cyan-500", fact: "Affiliating university for 500+ colleges in TN" },
-  { name: "VIT Vellore", tagline: "World-class private institute", slug: "vit-vellore", type: "Deemed", city: "Vellore", color: "from-emerald-600 to-teal-500", fact: "Largest private university campus in India" },
-  { name: "PSG College of Technology", tagline: "Coimbatore's finest", slug: "psg-college-of-technology", type: "Autonomous", city: "Coimbatore", color: "from-amber-600 to-yellow-500", fact: "92% placement rate with industry-leading labs" },
-  { name: "SRM Institute", tagline: "Top deemed university", slug: "srm-institute-of-science-and-technology", type: "Deemed", city: "Chennai", color: "from-violet-600 to-purple-500", fact: "Among top 50 in NIRF with 88% placements" },
-  { name: "Amrita Vishwa Vidyapeetham", tagline: "Multi-campus excellence", slug: "amrita-vishwa-vidyapeetham", type: "Deemed", city: "Coimbatore", color: "from-pink-600 to-rose-500", fact: "Top-ranked research university in South India" },
+  { name: "IIT Madras", slug: "iit-madras", type: "IIT", city: "Chennai", color: "from-red-600 to-orange-500", fact: "Ranked #1 in NIRF every year since 2016" },
+  { name: "NIT Trichy", slug: "nit-trichy", type: "NIT", city: "Tiruchirappalli", color: "from-orange-600 to-amber-500", fact: "90%+ placements with top global recruiters" },
+  { name: "Anna University", slug: "anna-university", type: "University", city: "Chennai", color: "from-blue-600 to-cyan-500", fact: "Affiliating university for 500+ colleges in TN" },
+  { name: "VIT Vellore", slug: "vit-vellore", type: "Deemed", city: "Vellore", color: "from-emerald-600 to-teal-500", fact: "Largest private university campus in India" },
+  { name: "PSG College of Technology", slug: "psg-college-of-technology", type: "Autonomous", city: "Coimbatore", color: "from-amber-600 to-yellow-500", fact: "92% placement rate with industry-leading labs" },
+  { name: "SRM Institute", slug: "srm-institute-of-science-and-technology", type: "Deemed", city: "Chennai", color: "from-violet-600 to-purple-500", fact: "Top 50 in NIRF with 88% placement rate" },
+  { name: "Amrita Vishwa Vidyapeetham", slug: "amrita-vishwa-vidyapeetham", type: "Deemed", city: "Coimbatore", color: "from-pink-600 to-rose-500", fact: "Top-ranked research university in South India" },
+  { name: "SASTRA University", slug: "sastra-university", type: "Deemed", city: "Thanjavur", color: "from-indigo-600 to-blue-500", fact: "NAAC A++ grade with excellent research output" },
+  { name: "Karunya University", slug: "karunya-university", type: "Deemed", city: "Coimbatore", color: "from-teal-600 to-green-500", fact: "Known for strong industry connections & placements" },
 ];
 
 function getFeatured() {
   const day = new Date().getDate();
-  return featuredColleges[day % featuredColleges.length];
+  const start = (day * 3) % featuredColleges.length;
+  return [0, 1, 2].map(i => featuredColleges[(start + i) % featuredColleges.length]);
 }
 
 export default function HomePage() {
-  const featured = getFeatured();
+  const featured = getFeatured(); // array of 3
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -98,24 +101,30 @@ export default function HomePage() {
       {/* Animated stats */}
       <AnimatedStats />
 
-      {/* Featured College of the Day */}
+      {/* Featured Colleges of the Day */}
       <ScrollReveal className="max-w-7xl mx-auto px-6 py-10">
-        <div className={`relative bg-gradient-to-r ${featured.color} rounded-3xl p-8 overflow-hidden`}>
-          <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-10">
-            <div className="text-[200px] font-black text-white leading-none -mt-4">
-              {featured.name.split(" ").map(w => w[0]).join("").slice(0, 3)}
-            </div>
-          </div>
-          <div className="relative">
-            <div className="text-white/70 text-xs font-bold uppercase tracking-widest mb-3">⭐ Featured College · Today</div>
-            <h2 className="text-3xl font-extrabold text-white mb-1">{featured.name}</h2>
-            <p className="text-white/80 text-base mb-2">{featured.city} · {featured.type}</p>
-            <p className="text-white/70 text-sm mb-6 italic">"{featured.fact}"</p>
-            <Link href={`/colleges/${featured.slug}`}
-              className="inline-flex items-center gap-2 bg-white text-slate-900 px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-white/90 transition-all shadow-lg">
-              View College Profile →
-            </Link>
-          </div>
+        <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">⭐ Featured Colleges · Today</div>
+        <div className="grid md:grid-cols-3 gap-4">
+          {featured.map((c, i) => (
+            <ScrollReveal key={c.slug} delay={i * 80}>
+              <div className={`relative bg-gradient-to-br ${c.color} rounded-2xl p-6 overflow-hidden`}>
+                <div className="absolute right-0 top-0 bottom-0 opacity-10 flex items-center pr-2">
+                  <div className="text-[100px] font-black text-white leading-none">
+                    {c.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
+                  </div>
+                </div>
+                <div className="relative">
+                  <span className="text-xs font-bold text-white/60 uppercase tracking-wider">{c.type} · {c.city}</span>
+                  <h2 className="text-lg font-extrabold text-white mt-1 mb-2 leading-snug">{c.name}</h2>
+                  <p className="text-white/70 text-xs mb-5 italic leading-relaxed">"{c.fact}"</p>
+                  <Link href={`/colleges/${c.slug}`}
+                    className="inline-flex items-center gap-1.5 bg-white text-slate-900 px-4 py-2 rounded-xl font-bold text-xs hover:bg-white/90 transition-all shadow-md">
+                    View Profile →
+                  </Link>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
         </div>
       </ScrollReveal>
 
