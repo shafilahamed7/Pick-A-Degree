@@ -70,7 +70,7 @@ export default async function MapPage() {
           </div>
         </div>
       </div>
-      <div className="flex-1 relative" style={{ minHeight: "calc(100vh - 130px)" }}>
+      <div style={{ height: "calc(100vh - 120px)", width: "100%", position: "relative" }}>
         <MapWrapper colleges={mapped} />
       </div>
     </div>

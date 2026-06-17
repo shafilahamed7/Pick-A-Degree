@@ -14,5 +14,5 @@ const CollegeMap = nextDynamic(() => import("./CollegeMap"), {
 });
 
 export default function MapWrapper({ colleges }: { colleges: any[] }) {
-  return <CollegeMap colleges={colleges} />;
+  return <div style={{ width: "100%", height: "100%" }}><CollegeMap colleges={colleges} /></div>;
 }
