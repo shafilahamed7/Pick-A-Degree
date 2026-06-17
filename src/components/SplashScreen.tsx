@@ -14,9 +14,9 @@ export default function SplashScreen() {
     sessionStorage.setItem("pad-splash-shown", "1");
 
     // fade-in → hold → fade-out → done
-    const t1 = setTimeout(() => setPhase("hold"), 300);   // after fade-in
-    const t2 = setTimeout(() => setPhase("out"),  650);   // start fade-out
-    const t3 = setTimeout(() => setPhase("done"), 900);   // unmount
+    const t1 = setTimeout(() => setPhase("hold"), 450);   // after fade-in
+    const t2 = setTimeout(() => setPhase("out"),  1000);  // start fade-out
+    const t3 = setTimeout(() => setPhase("done"), 1350);  // unmount
 
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, []);
@@ -35,18 +35,18 @@ export default function SplashScreen() {
         justifyContent: "center",
         opacity: phase === "out" ? 0 : 1,
         transition: phase === "in"
-          ? "opacity 0.3s ease-in"
+          ? "opacity 0.45s ease-in"
           : phase === "out"
-          ? "opacity 0.25s ease-out"
+          ? "opacity 0.35s ease-out"
           : "none",
         pointerEvents: phase === "out" ? "none" : "all",
       }}
     >
       <div
         style={{
-          transform: phase === "in" ? "scale(0.92)" : "scale(1)",
+          transform: phase === "in" ? "scale(0.88)" : "scale(1)",
           opacity: phase === "in" ? 0 : 1,
-          transition: "transform 0.35s cubic-bezier(0.34,1.2,0.64,1), opacity 0.3s ease-in",
+          transition: "transform 0.5s cubic-bezier(0.22,1.2,0.36,1), opacity 0.45s ease-in",
         }}
       >
         <Image
