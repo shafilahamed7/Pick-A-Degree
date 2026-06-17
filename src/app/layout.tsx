@@ -14,13 +14,21 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${geist.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-gray-50">
+      <body className="min-h-full flex flex-col bg-slate-50">
         <Navbar />
         <main className="flex-1">{children}</main>
-        <footer className="bg-white border-t border-gray-100 py-8 mt-auto">
-          <div className="max-w-7xl mx-auto px-4 text-center text-sm text-gray-500">
-            <p className="font-semibold text-gray-700 mb-1">Pick a Degree (PAD)</p>
-            <p>Helping Tamil Nadu students find the right college and career path.</p>
+        <footer className="bg-white border-t border-slate-100 py-10 mt-auto">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">P</span>
+                </div>
+                <span className="font-semibold text-slate-900 text-sm">Pick a Degree</span>
+              </div>
+              <p className="text-sm text-slate-400">Helping Tamil Nadu students find the right college and career path.</p>
+              <p className="text-xs text-slate-300">© {new Date().getFullYear()} PAD. All rights reserved.</p>
+            </div>
           </div>
         </footer>
       </body>
