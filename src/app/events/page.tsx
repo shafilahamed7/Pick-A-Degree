@@ -70,7 +70,8 @@ export default function EventsPage() {
     setLoading(true);
     fetch(`/api/events?${params}`)
       .then((r) => r.json())
-      .then((data) => { setEvents(data); setLoading(false); });
+      .then((data) => { setEvents(Array.isArray(data) ? data : []); setLoading(false); })
+      .catch(() => { setEvents([]); setLoading(false); });
   }, [search, activeType]);
 
   return (

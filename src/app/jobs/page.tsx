@@ -60,7 +60,8 @@ export default function JobsPage() {
     setLoading(true);
     fetch(`/api/jobs?${params}`)
       .then((r) => r.json())
-      .then((data) => { setJobs(data); setLoading(false); });
+      .then((data) => { setJobs(Array.isArray(data) ? data : []); setLoading(false); })
+      .catch(() => { setJobs([]); setLoading(false); });
   }, [search, category, jobType]);
 
   const daysLeft = (date: string | null) => {

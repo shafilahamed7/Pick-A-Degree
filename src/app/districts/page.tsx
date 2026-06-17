@@ -22,11 +22,16 @@ const DISTRICT_META: Record<string, { emoji: string; tagline: string }> = {
 };
 
 export default async function DistrictsPage() {
-  const districtCounts = await prisma.college.groupBy({
-    by: ["district"],
-    _count: { id: true },
-    orderBy: { _count: { id: "desc" } },
-  });
+  let districtCounts: { district: string; _count: { id: number } }[] = [];
+  try {
+    districtCounts = await prisma.college.groupBy({
+      by: ["district"],
+      _count: { id: true },
+      orderBy: { _count: { id: "desc" } },
+    });
+  } catch (e) {
+    console.error("Districts page DB error:", e);
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">

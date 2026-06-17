@@ -55,28 +55,32 @@ const COLLEGE_FACTS: Record<string, string> = {
 };
 
 export default async function HomePage() {
-  // Fetch top colleges by NIRF rank from DB — real slugs, always correct
-  const topColleges = await prisma.college.findMany({
-    where: { nirfRank: { not: null } },
-    orderBy: { nirfRank: "asc" },
-    take: 6,
-    select: {
-      id: true, name: true, slug: true, type: true, city: true, nirfRank: true,
-      placements: { orderBy: { year: "desc" }, take: 1, select: { placementPercent: true } },
-    },
-  });
-
-  // Fetch featured colleges — rotate daily using real DB slugs
-  const allFeaturable = await prisma.college.findMany({
-    where: { OR: [{ nirfRank: { not: null } }, { naacGrade: { not: null } }] },
-    orderBy: { nirfRank: "asc" },
-    take: 15,
-    select: { id: true, name: true, slug: true, type: true, city: true, nirfRank: true },
-  });
+  let topColleges: any[] = [];
+  let allFeaturable: any[] = [];
+  try {
+    topColleges = await prisma.college.findMany({
+      where: { nirfRank: { not: null } },
+      orderBy: { nirfRank: "asc" },
+      take: 6,
+      select: {
+        id: true, name: true, slug: true, type: true, city: true, nirfRank: true,
+        placements: { orderBy: { year: "desc" }, take: 1, select: { placementPercent: true } },
+      },
+    });
+    allFeaturable = await prisma.college.findMany({
+      where: { OR: [{ nirfRank: { not: null } }, { naacGrade: { not: null } }] },
+      orderBy: { nirfRank: "asc" },
+      take: 15,
+      select: { id: true, name: true, slug: true, type: true, city: true, nirfRank: true },
+    });
+  } catch (e) {
+    console.error("Home page DB error:", e);
+  }
 
   const day = new Date().getDate();
-  const start = (day * 3) % allFeaturable.length;
-  const featured = [0, 1, 2].map(i => allFeaturable[(start + i) % allFeaturable.length]);
+  const featured = allFeaturable.length >= 3
+    ? [0, 1, 2].map(i => allFeaturable[((day * 3) + i) % allFeaturable.length])
+    : allFeaturable;
 
   return (
     <div className="min-h-screen bg-slate-50">

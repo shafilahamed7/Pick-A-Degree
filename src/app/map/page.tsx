@@ -28,13 +28,18 @@ function getCoords(city: string, district: string): [number, number] | null {
 }
 
 export default async function MapPage() {
-  const colleges = await prisma.college.findMany({
-    select: {
-      id: true, name: true, slug: true, type: true, city: true, district: true,
-      nirfRank: true,
-      placements: { orderBy: { year: "desc" }, take: 1, select: { placementPercent: true } },
-    },
-  });
+  let colleges: any[] = [];
+  try {
+    colleges = await prisma.college.findMany({
+      select: {
+        id: true, name: true, slug: true, type: true, city: true, district: true,
+        nirfRank: true,
+        placements: { orderBy: { year: "desc" }, take: 1, select: { placementPercent: true } },
+      },
+    });
+  } catch (e) {
+    console.error("Map page DB error:", e);
+  }
 
   const mapped = colleges
     .map((c) => {
