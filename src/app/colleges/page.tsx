@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { DISTRICTS, COLLEGE_TYPES, formatPackage } from "@/lib/utils";
+import ShortlistButton from "@/components/ShortlistButton";
 
 type College = {
   id: string;
@@ -39,6 +40,7 @@ function CollegesContent() {
   const [district, setDistrict] = useState(searchParams.get("district") ?? "");
   const [type, setType] = useState(searchParams.get("type") ?? "");
   const [minPlacement, setMinPlacement] = useState(searchParams.get("minPlacement") ?? "");
+  const [sortBy, setSortBy] = useState("name");
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -103,6 +105,11 @@ function CollegesContent() {
             <option value="80">80%+</option>
             <option value="90">90%+</option>
           </select>
+          <select value={sortBy} onChange={e => setSortBy(e.target.value)} className="px-4 py-2.5 border border-slate-200 rounded-xl text-sm text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300">
+            <option value="name">Sort: Name</option>
+            <option value="nirf">Sort: NIRF Rank</option>
+            <option value="placement">Sort: Placement %</option>
+          </select>
         </div>
 
         {loading ? (
@@ -128,7 +135,11 @@ function CollegesContent() {
           <>
             <p className="text-sm text-slate-500 mb-4 font-medium">{colleges.length} colleges found</p>
             <div className="grid gap-4 md:grid-cols-2">
-              {colleges.map((college) => {
+              {[...colleges].sort((a, b) => {
+                if (sortBy === "nirf") return (a.nirfRank ?? 9999) - (b.nirfRank ?? 9999);
+                if (sortBy === "placement") return (b.placements[0]?.placementPercent ?? 0) - (a.placements[0]?.placementPercent ?? 0);
+                return a.name.localeCompare(b.name);
+              }).map((college) => {
                 const placement = college.placements[0];
                 return (
                   <Link
@@ -148,9 +159,12 @@ function CollegesContent() {
                           </p>
                         </div>
                       </div>
-                      <span className={`text-xs font-medium px-2.5 py-1 rounded-full border shrink-0 ${TYPE_COLORS[college.type] ?? "bg-slate-50 text-slate-700 border-slate-100"}`}>
-                        {college.type}
-                      </span>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <ShortlistButton college={{ id: college.id, name: college.name, slug: college.slug, type: college.type, city: college.city, district: college.district, nirfRank: college.nirfRank, naacGrade: college.naacGrade }} />
+                        <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${TYPE_COLORS[college.type] ?? "bg-slate-50 text-slate-700 border-slate-100"}`}>
+                          {college.type}
+                        </span>
+                      </div>
                     </div>
 
                     {college.description && (

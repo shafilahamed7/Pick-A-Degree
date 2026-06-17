@@ -4,53 +4,39 @@ import HeroSearch from "@/components/HeroSearch";
 const stats = [
   { label: "Colleges", value: "1,500+", icon: "🏛️" },
   { label: "Courses", value: "5,000+", icon: "📚" },
-  { label: "Districts", value: "38", icon: "📍" },
-  { label: "Students helped", value: "50,000+", icon: "🎓" },
+  { label: "Scholarships", value: "15+", icon: "🎓" },
+  { label: "Entrance Exams", value: "11+", icon: "📝" },
 ];
 
 const features = [
-  {
-    icon: "🔍",
-    title: "Smart college search",
-    desc: "Filter by district, course, fee, placement %, NAAC grade and more.",
-    href: "/colleges",
-    color: "bg-blue-50",
-    iconBg: "bg-blue-100",
-  },
-  {
-    icon: "⚖️",
-    title: "Side-by-side compare",
-    desc: "Compare up to 3 colleges across fees, placements, recruiters and rank.",
-    href: "/compare",
-    color: "bg-violet-50",
-    iconBg: "bg-violet-100",
-  },
-  {
-    icon: "🤖",
-    title: "AI college advisor",
-    desc: "Tell us your marks, budget, and goals — get personalised recommendations.",
-    href: "/ai-advisor",
-    color: "bg-emerald-50",
-    iconBg: "bg-emerald-100",
-  },
-];
-
-const quickLinks = [
-  { label: "Top CSE colleges in Chennai", href: "/colleges?city=Chennai&type=PRIVATE" },
-  { label: "Government medical colleges", href: "/colleges?type=GOVERNMENT" },
-  { label: "IITs & NITs in Tamil Nadu", href: "/colleges?type=IIT,NIT" },
-  { label: "80%+ placement colleges", href: "/colleges?minPlacement=80" },
-  { label: "MBA colleges in Coimbatore", href: "/colleges?city=Coimbatore" },
-  { label: "NAAC A++ colleges", href: "/colleges?naac=A++" },
-  { label: "Low fee engineering", href: "/colleges?type=GOVERNMENT" },
-  { label: "Autonomous colleges TN", href: "/colleges?type=AUTONOMOUS" },
+  { icon: "🔍", title: "Smart college search", desc: "Filter by district, course, fee, placement %, NAAC grade and more.", href: "/colleges", iconBg: "bg-blue-100" },
+  { icon: "🏆", title: "NIRF Rankings", desc: "Official NIRF 2025 rankings for Tamil Nadu colleges with NAAC grades.", href: "/rankings", iconBg: "bg-amber-100" },
+  { icon: "📝", title: "Entrance Exam Guide", desc: "TNEA, JEE, NEET, TANCET — dates, eligibility, official links.", href: "/entrance-exams", iconBg: "bg-rose-100" },
+  { icon: "📊", title: "Cutoff Explorer", desc: "JEE/TNEA opening and closing ranks for top TN colleges by branch.", href: "/cutoffs", iconBg: "bg-violet-100" },
+  { icon: "💰", title: "Scholarship Finder", desc: "Find govt. and private scholarships for BC, MBC, SC/ST, merit students.", href: "/scholarships", iconBg: "bg-emerald-100" },
+  { icon: "🎯", title: "College Recommender", desc: "Answer 5 questions about branch, budget, and priority — get your matches.", href: "/recommend", iconBg: "bg-indigo-100" },
+  { icon: "⚖️", title: "Side-by-side compare", desc: "Compare up to 3 colleges across fees, placements, recruiters and rank.", href: "/compare", iconBg: "bg-teal-100" },
+  { icon: "🤖", title: "AI college advisor", desc: "Tell us your marks, budget, and goals — get personalised recommendations.", href: "/ai-advisor", iconBg: "bg-pink-100" },
 ];
 
 const topColleges = [
-  { name: "IIT Madras", city: "Chennai", type: "IIT", rank: 1, placement: "95%", pkg: "₹22 L avg", initials: "IIT", color: "bg-red-50 text-red-700" },
-  { name: "NIT Trichy", city: "Tiruchirappalli", type: "NIT", rank: 9, placement: "90%", pkg: "₹14 L avg", initials: "NIT", color: "bg-orange-50 text-orange-700" },
-  { name: "VIT University", city: "Vellore", type: "Deemed", rank: 11, placement: "89%", pkg: "₹11 L avg", initials: "VIT", color: "bg-emerald-50 text-emerald-700" },
-  { name: "SSN College of Engineering", city: "Chennai", type: "Autonomous", rank: 52, placement: "92%", pkg: "₹12 L avg", initials: "SSN", color: "bg-indigo-50 text-indigo-700" },
+  { name: "IIT Madras", city: "Chennai", type: "IIT", rank: 1, placement: "95%", slug: "iit-madras", color: "bg-red-50 text-red-700" },
+  { name: "NIT Trichy", city: "Tiruchirappalli", type: "NIT", rank: 9, placement: "90%", slug: "nit-trichy", color: "bg-orange-50 text-orange-700" },
+  { name: "Anna University", city: "Chennai", type: "University", rank: 10, placement: "85%", slug: "anna-university", color: "bg-blue-50 text-blue-700" },
+  { name: "VIT Vellore", city: "Vellore", type: "Deemed", rank: 16, placement: "89%", slug: "vit-vellore", color: "bg-emerald-50 text-emerald-700" },
+  { name: "SRM Institute of Science and Technology", city: "Chennai", type: "Deemed", rank: 14, placement: "88%", slug: "srm-institute-of-science-and-technology", color: "bg-violet-50 text-violet-700" },
+  { name: "PSG College of Technology", city: "Coimbatore", type: "Autonomous", rank: 72, placement: "92%", slug: "psg-college-of-technology", color: "bg-amber-50 text-amber-700" },
+];
+
+const quickLinks = [
+  { label: "Top CSE colleges in Chennai", href: "/colleges?search=chennai" },
+  { label: "Government engineering colleges", href: "/colleges?type=GOVERNMENT" },
+  { label: "IITs & NITs in Tamil Nadu", href: "/rankings?type=IIT" },
+  { label: "Scholarships for SC/ST students", href: "/scholarships?category=SC/ST" },
+  { label: "MBA colleges in Coimbatore", href: "/colleges?search=coimbatore" },
+  { label: "NAAC A++ colleges", href: "/rankings" },
+  { label: "JEE cutoffs 2024", href: "/cutoffs" },
+  { label: "TNEA exam details", href: "/entrance-exams" },
 ];
 
 export default function HomePage() {
@@ -68,8 +54,7 @@ export default function HomePage() {
             <span className="text-indigo-400">in Tamil Nadu</span>
           </h1>
           <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Explore 1,500+ colleges, compare courses, check placements, and get
-            AI-powered recommendations — all in one place.
+            Explore 1,500+ colleges, check rankings, cutoffs, scholarships, and get AI-powered recommendations — all free.
           </p>
           <HeroSearch />
         </div>
@@ -88,24 +73,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features */}
+      {/* Features grid */}
       <section className="max-w-7xl mx-auto px-6 py-16">
         <div className="text-center mb-10">
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Everything you need to decide</h2>
           <p className="text-slate-500">Tools built for Tamil Nadu students making the most important choice of their life.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {features.map((f) => (
-            <Link
-              key={f.href}
-              href={f.href}
-              className="bg-white rounded-2xl border border-slate-100 p-6 hover:border-indigo-200 hover:shadow-md transition-all group"
-            >
-              <div className={`w-12 h-12 ${f.iconBg} rounded-xl flex items-center justify-center text-2xl mb-4`}>
-                {f.icon}
-              </div>
-              <h3 className="font-semibold text-slate-900 mb-2 group-hover:text-indigo-700 transition-colors">{f.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
+            <Link key={f.href} href={f.href} className="bg-white rounded-2xl border border-slate-100 p-5 hover:border-indigo-200 hover:shadow-md transition-all group">
+              <div className={`w-10 h-10 ${f.iconBg} rounded-xl flex items-center justify-center text-xl mb-3`}>{f.icon}</div>
+              <h3 className="font-semibold text-slate-900 text-sm mb-1 group-hover:text-indigo-700 transition-colors">{f.title}</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">{f.desc}</p>
             </Link>
           ))}
         </div>
@@ -115,26 +94,21 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-6 pb-10">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-lg font-bold text-slate-900">Top ranked colleges</h2>
-          <Link href="/colleges" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
-            View all →
-          </Link>
+          <Link href="/rankings" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">View all rankings →</Link>
         </div>
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {topColleges.map((c) => (
-            <Link
-              key={c.name}
-              href={`/colleges/${c.name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`}
-              className="bg-white rounded-2xl border border-slate-100 p-5 flex items-center gap-4 hover:border-indigo-200 hover:shadow-sm transition-all"
-            >
-              <div className={`w-12 h-12 rounded-xl ${c.color} flex items-center justify-center font-bold text-sm shrink-0`}>
-                {c.initials}
+            <Link key={c.slug} href={`/colleges/${c.slug}`}
+              className="bg-white rounded-2xl border border-slate-100 p-5 flex items-center gap-4 hover:border-indigo-200 hover:shadow-sm transition-all">
+              <div className={`w-12 h-12 rounded-xl ${c.color} flex items-center justify-center font-bold text-xs shrink-0 text-center leading-tight p-1`}>
+                {c.name.split(" ").slice(0, 2).map(w => w[0]).join("")}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="font-semibold text-slate-900 truncate">{c.name}</div>
-                <div className="text-sm text-slate-500">{c.city} · {c.type}</div>
+                <div className="font-semibold text-slate-900 text-sm truncate">{c.name}</div>
+                <div className="text-xs text-slate-500">{c.city} · {c.type}</div>
               </div>
               <div className="text-right shrink-0">
-                <div className="text-sm font-semibold text-slate-900">NIRF #{c.rank}</div>
+                <div className="text-sm font-bold text-amber-600">NIRF #{c.rank}</div>
                 <div className="text-xs text-emerald-600 font-medium">{c.placement} placed</div>
               </div>
             </Link>
@@ -147,11 +121,8 @@ export default function HomePage() {
         <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-4">Popular searches</h2>
         <div className="flex flex-wrap gap-2">
           {quickLinks.map((q) => (
-            <Link
-              key={q.label}
-              href={q.href}
-              className="text-sm px-4 py-2 bg-white border border-slate-200 rounded-full text-slate-600 hover:bg-indigo-50 hover:border-indigo-200 hover:text-indigo-700 transition-all font-medium"
-            >
+            <Link key={q.label} href={q.href}
+              className="text-sm px-4 py-2 bg-white border border-slate-200 rounded-full text-slate-600 hover:bg-indigo-50 hover:border-indigo-200 hover:text-indigo-700 transition-all font-medium">
               {q.label}
             </Link>
           ))}
