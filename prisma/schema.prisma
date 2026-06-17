@@ -42,6 +42,7 @@ model College {
   events       Event[]
   facilities   Facility[]
   savedBy      SavedCollege[]
+  jobOpenings  JobOpening[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 }
@@ -98,6 +99,23 @@ model Facility {
   type      FacilityType
   collegeId String
   college   College      @relation(fields: [collegeId], references: [id])
+}
+
+model JobOpening {
+  id           String      @id @default(cuid())
+  title        String
+  department   String
+  jobType      JobType
+  staffCategory StaffCategory
+  qualification String
+  experience   String?
+  salary       String?
+  lastDate     DateTime?
+  description  String?
+  applyUrl     String?
+  collegeId    String
+  college      College     @relation(fields: [collegeId], references: [id])
+  createdAt    DateTime    @default(now())
 }
 
 model User {
@@ -203,4 +221,17 @@ enum FacilityType {
 enum UserRole {
   STUDENT
   ADMIN
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  VISITING
+  GUEST
+}
+
+enum StaffCategory {
+  TEACHING
+  NON_TEACHING
 }
