@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SplashScreen from "@/components/SplashScreen";
+import NativeBridge from "@/components/NativeBridge";
 
 const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${geist.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-slate-50">
         <SplashScreen />
+        <NativeBridge />
         <Navbar />
         <main className="flex-1">{children}</main>
         <footer className="bg-white border-t border-slate-100 py-10 mt-auto">

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Pick A Degree</string>
+    <string name="title_activity_main">Pick A Degree</string>
+    <string name="package_name">com.pickadegree.app</string>
+    <string name="custom_url_scheme">com.pickadegree.app</string>
+</resources>
